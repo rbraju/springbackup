@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="db2DataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.ibm.db2.jcc.DB2Driver" />
+		<property name="url" value="jdbc:db2://11.142.22.42:50000/RAJESH:currentSchema=TWITTER;" />
+		<property name="username" value="db2user" />
+		<property name="password" value="password" />
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="db2DataSource" />
+	</bean>
+	
+	<bean id="namedParameterTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="db2DataSource" />
+	</bean>
+	
+	<bean id="tweetDAO" class="com.spring.twitter.dao.TweetDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="namedParameterTemplate" ref="namedParameterTemplate" />
+	</bean>
+</beans>

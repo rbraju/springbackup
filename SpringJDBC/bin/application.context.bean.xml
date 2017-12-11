@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="db2DS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.ibm.db2.jcc.DB2Driver" />
+		<property name="url" value="jdbc:db2://11.142.22.42:50000/RAJESH:currentSchema=SPRING;" />
+		<property name="username" value="db2user" />
+		<property name="password" value="password" />
+	</bean>
+	
+	<bean id="mysqlDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/SPRING"/>
+		<property name="username" value="root" />
+		<property name="password" value="password" />
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="mysqlDS" />
+	</bean>
+	
+	<bean id="namedTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="mysqlDS" />
+	</bean>
+
+	<bean id="employeeDAOBean" class="com.spring.jdbc.template.EmployeeDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="namedTemplate" ref="namedTemplate" />
+	</bean>
+		
+	<bean id="userDAOBean" class="com.spring.jdbc.template.UserDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+		
+</beans>
