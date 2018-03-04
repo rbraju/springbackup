@@ -4,6 +4,9 @@ import java.lang.reflect.Method;
 
 import org.springframework.aop.MethodBeforeAdvice;
 
+/**
+* Sample comment from branch 1
+*/
 public class BeforeAdvisor implements MethodBeforeAdvice {
 
 	@Override
